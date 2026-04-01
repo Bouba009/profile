@@ -9,12 +9,12 @@
            CSS Variables (المتغيرات والألوان)
            ========================================= */
         :root {
-            --bg-color: #03030a;
+            --bg-color: #050505;
             --neon-primary: #00f3ff;
             --neon-secondary: #b026ff;
             --text-main: #ffffff;
             --text-muted: #a0a0b5;
-            --glass-bg: rgba(20, 20, 30, 0.4);
+            --glass-bg: rgba(20, 20, 30, 0.3);
             --glass-border: rgba(255, 255, 255, 0.08);
             --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -45,17 +45,19 @@
         }
         .glass-card:hover::before { left: 150%; }
         .glass-card:hover {
-            border-color: rgba(0, 243, 255, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1); transform: translateY(-5px);
+            border-color: rgba(0, 243, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.15); transform: translateY(-5px);
         }
-        .glow-text { text-shadow: 0 0 10px var(--neon-primary), 0 0 20px var(--neon-secondary); }
+        .glow-text { text-shadow: 0 0 15px var(--neon-primary); }
+        
         .btn-neon {
-            background: transparent; color: var(--text-main); border: 1px solid var(--neon-primary);
+            background: rgba(0, 243, 255, 0.05); color: var(--text-main); border: 1px solid var(--neon-primary);
             padding: 12px 30px; border-radius: 30px; cursor: pointer; transition: var(--transition);
             font-size: 1rem; position: relative; overflow: hidden; display: inline-block; text-decoration: none;
+            font-weight: bold;
         }
         .btn-neon:hover {
-            background: var(--neon-primary); color: #000; box-shadow: 0 0 20px var(--neon-primary); letter-spacing: 1px;
+            background: var(--neon-primary); color: #000; box-shadow: 0 0 25px var(--neon-primary); letter-spacing: 1px;
         }
 
         /* =========================================
@@ -70,11 +72,11 @@
            ========================================= */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(3, 3, 10, 0.7); backdrop-filter: blur(15px);
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border); padding: 15px 0; transition: var(--transition);
         }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.8rem; font-weight: bold; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px;}
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px;}
         .logo span { color: var(--neon-primary); }
         
         .nav-links { display: flex; gap: 25px; list-style: none; align-items: center; }
@@ -84,63 +86,71 @@
         /* Language Switcher */
         .lang-menu { position: relative; cursor: pointer; }
         .selected-lang {
-            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05);
+            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08);
             padding: 8px 15px; border-radius: 20px; border: 1px solid var(--glass-border); transition: var(--transition);
         }
         .selected-lang:hover { border-color: var(--neon-primary); }
         .lang-options {
-            position: absolute; top: 120%; right: 0; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(10px);
+            position: absolute; top: 120%; right: 0; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); border-radius: 10px; list-style: none;
-            width: 150px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: var(--transition);
+            width: 150px; opacity: 0; visibility: hidden; transform: translateY(15px); transition: var(--transition);
         }
         .lang-menu:hover .lang-options { opacity: 1; visibility: visible; transform: translateY(0); }
-        .lang-options li { padding: 10px 15px; transition: var(--transition); display: flex; align-items: center; gap: 10px; }
-        .lang-options li:hover { background: rgba(0, 243, 255, 0.1); color: var(--neon-primary); }
+        .lang-options li { padding: 12px 15px; transition: var(--transition); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--glass-border);}
+        .lang-options li:last-child { border-bottom: none; }
+        .lang-options li:hover { background: rgba(0, 243, 255, 0.15); color: var(--neon-primary); padding-right: 20px;}
 
         /* Hamburger Menu */
-        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-        .hamburger span { width: 30px; height: 3px; background: var(--text-main); transition: var(--transition); border-radius: 3px; }
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1001;}
+        .hamburger span { width: 35px; height: 3px; background: var(--text-main); transition: var(--transition); border-radius: 3px; }
+        
+        .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background: var(--neon-primary); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background: var(--neon-primary); }
 
         @media (max-width: 900px) {
             .hamburger { display: flex; }
             .nav-links {
-                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(5, 5, 15, 0.95);
-                flex-direction: column; padding: 20px 0; border-bottom: 1px solid var(--glass-border);
-                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: 0.5s ease-in-out;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(5, 5, 5, 0.98);
+                flex-direction: column; justify-content: center; align-items: center; gap: 30px;
+                clip-path: circle(0px at top right); transition: 0.6s ease-in-out;
             }
-            .nav-links.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            .nav-links.active { clip-path: circle(1500px at top right); }
+            .nav-links a { font-size: 1.5rem; }
             .lang-options { right: auto; left: 50%; transform: translateX(-50%) translateY(10px); }
             .lang-menu:hover .lang-options { transform: translateX(-50%) translateY(0); }
         }
 
         /* =========================================
-           Hero Section (الخلفية مع تأثير التلاشي)
+           Hero Section (الخلفية مع التلاشي الاحترافي)
            ========================================= */
-        .hero-section { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        /* حاوية الصورة */
+        .hero-section { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        
+        /* الصورة الخلفية ثابتة وواضحة من الأعلى */
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDfYpaZ6QgBgvY8A9K34omey7-bQn5xDa0HP2IQahNo5ETv6Xun26Cbb5bSpzZ40dCanPVRvCfuYUuWZ2Kd4ILTnCqhW1HXk1TjJxB06M-a0ov2dmOdmck8WSU0qStm3IJ05kxwmtjfdUs6-R4SC_rfEIcnbb7EjNiizk38hkCX0OdAUPL52-6oY2bJEo/s1830/1000009721.png');
-            background-size: cover; background-position: center top; z-index: 0;
-            filter: brightness(0.7); /* تغميق الصورة قليلا ليظهر النص */
+            background-size: cover; background-position: center 20%; background-attachment: fixed; z-index: 0;
         }
-        /* تدرج التلاشي من الأسفل */
+        
+        /* التدرج اللوني للتلاشي من الأسفل (الدمج مع لون الموقع) */
         .hero-fade {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to top, var(--bg-color) 0%, rgba(3,3,10,0.8) 30%, transparent 100%);
-            z-index: 1;
+            position: absolute; bottom: -2px; left: 0; width: 100%; height: 70%;
+            background: linear-gradient(to top, var(--bg-color) 0%, rgba(5,5,5,0.9) 20%, rgba(5,5,5,0.4) 60%, transparent 100%);
+            z-index: 1; pointer-events: none;
         }
+
         .hero-content {
-            position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 20px;
-            margin-top: 50px;
+            position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 20px; margin-top: 100px;
         }
-        .hero-content h1 { font-size: 4.5rem; margin-bottom: 10px; font-weight: 800; }
-        .hero-content h2 { font-size: 2rem; color: var(--neon-primary); margin-bottom: 20px; font-weight: 400; }
-        .hero-content p { font-size: 1.2rem; color: rgba(255,255,255,0.8); margin-bottom: 40px; line-height: 1.6; }
+        .hero-content h1 { font-size: 5rem; margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; }
+        .hero-content h2 { font-size: 2.2rem; color: var(--neon-primary); margin-bottom: 20px; font-weight: 500; }
+        .hero-content p { font-size: 1.3rem; color: rgba(255,255,255,0.8); margin-bottom: 40px; line-height: 1.6; }
 
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 3rem; }
-            .hero-content h2 { font-size: 1.5rem; }
+            .hero-content h1 { font-size: 3.5rem; }
+            .hero-content h2 { font-size: 1.8rem; }
+            .hero-bg { background-attachment: scroll; /* أفضل لأداء الهواتف */ }
         }
 
         /* =========================================
@@ -151,20 +161,20 @@
 
         /* Skills */
         .skill-item { margin-bottom: 25px; }
-        .skill-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; }
-        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
-        .progress { height: 100%; background: linear-gradient(90deg, var(--neon-primary), var(--neon-secondary)); width: 0; transition: width 2s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 0 10px var(--neon-primary); }
+        .skill-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 1.1rem;}
+        .progress-bar { width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; box-shadow: inset 0 0 5px rgba(0,0,0,0.5);}
+        .progress { height: 100%; background: linear-gradient(90deg, var(--neon-primary), var(--neon-secondary)); width: 0; transition: width 2s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 0 15px var(--neon-primary); }
 
         /* Item Cards */
-        .item-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .item-card img { width: 100%; max-height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--glass-border); }
-        .item-card h3 { margin-bottom: 15px; font-size: 1.4rem; }
+        .item-card { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+        .item-card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+        .item-card h3 { margin-bottom: 15px; font-size: 1.4rem; color: var(--text-main);}
         .item-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; }
 
         /* Contact Form */
         .contact-form { display: flex; flex-direction: column; gap: 20px; }
         .contact-form input, .contact-form textarea {
-            background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white;
+            background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: white;
             padding: 18px; border-radius: 12px; font-family: inherit; font-size: 1rem; transition: var(--transition);
         }
         .contact-form input:focus, .contact-form textarea:focus { border-color: var(--neon-primary); outline: none; box-shadow: 0 0 15px rgba(0,243,255,0.2); }
@@ -172,9 +182,8 @@
         /* =========================================
            Professional Animations
            ========================================= */
-        .anim-element { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .anim-element { opacity: 0; transform: translateY(60px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .anim-element.show { opacity: 1; transform: translateY(0); }
-        /* Delay classes for grid items */
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
@@ -183,11 +192,11 @@
            Admin Panel Styles
            ========================================= */
         #admin-view, #login-view { display: none; padding-top: 120px; }
-        .admin-panel { background: rgba(5,5,15,0.9); border: 1px solid var(--neon-secondary); }
+        .admin-panel { background: rgba(10,10,10,0.95); border: 1px solid var(--neon-secondary); }
         .admin-section { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .admin-input { background: #111; border: 1px solid #333; color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px;}
+        .admin-input { background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px;}
         .admin-list li { display: flex; justify-content: space-between; background: #222; padding: 15px; margin-bottom: 10px; border-radius: 8px; align-items: center;}
-        .btn-danger { background: #ff3333; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; }
+        .btn-danger { background: #ff3333; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold;}
 
     </style>
 </head>
@@ -199,12 +208,12 @@
             <div class="logo">Port<span>folio</span></div>
             
             <ul class="nav-links" id="nav-links">
-                <li><a href="#home" data-i18n="navHome">الرئيسية</a></li>
-                <li><a href="#about" data-i18n="navAbout">من أنا</a></li>
-                <li><a href="#services" data-i18n="navServices">الخدمات</a></li>
-                <li><a href="#projects" data-i18n="navProjects">الأعمال</a></li>
-                <li><a href="#partners" data-i18n="navPartners">الشركاء</a></li>
-                <li><a href="#contact" data-i18n="navContact">تواصل</a></li>
+                <li><a href="#home" data-i18n="navHome" onclick="closeMenu()">الرئيسية</a></li>
+                <li><a href="#about" data-i18n="navAbout" onclick="closeMenu()">من أنا</a></li>
+                <li><a href="#services" data-i18n="navServices" onclick="closeMenu()">الخدمات</a></li>
+                <li><a href="#skills" data-i18n="titleSkills" onclick="closeMenu()">المهارات</a></li>
+                <li><a href="#projects" data-i18n="navProjects" onclick="closeMenu()">الأعمال</a></li>
+                <li><a href="#contact" data-i18n="navContact" onclick="closeMenu()">تواصل</a></li>
                 
                 <!-- Language Switcher with Flags -->
                 <li class="lang-menu">
@@ -218,7 +227,7 @@
             </ul>
 
             <!-- Mobile Hamburger -->
-            <div class="hamburger" onclick="toggleMenu()">
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
                 <span></span><span></span><span></span>
             </div>
         </div>
@@ -227,7 +236,7 @@
     <!-- ================= Public Portfolio View ================= -->
     <main id="portfolio-view">
         
-        <!-- Hero Section -->
+        <!-- Hero Section (Background Image with Fade) -->
         <section id="home" class="hero-section">
             <div class="hero-bg" id="hero-background"></div>
             <div class="hero-fade"></div>
@@ -244,7 +253,7 @@
         <section id="about" class="container">
             <h2 class="section-title anim-element" data-i18n="navAbout">من أنا</h2>
             <div class="glass-card anim-element delay-1">
-                <p style="font-size: 1.15rem; line-height: 1.8; text-align: justify;" id="ui-about-desc">
+                <p style="font-size: 1.2rem; line-height: 1.9; text-align: justify;" id="ui-about-desc">
                     نص من أنا...
                 </p>
             </div>
@@ -258,7 +267,7 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
+        <!-- Skills Section (Updated with new skills) -->
         <section id="skills" class="container">
             <h2 class="section-title anim-element" data-i18n="titleSkills">المهارات</h2>
             <div class="glass-card grid-2 anim-element delay-1" id="ui-skills-container">
@@ -282,14 +291,6 @@
             </div>
         </section>
 
-        <!-- Partners Section -->
-        <section id="partners" class="container">
-            <h2 class="section-title anim-element" data-i18n="navPartners">الشركاء والعملاء</h2>
-            <div class="grid-3" id="ui-partners-container">
-                <!-- Partners injected here -->
-            </div>
-        </section>
-
         <!-- Contact Section -->
         <section id="contact" class="container">
             <h2 class="section-title anim-element" data-i18n="navContact">تواصل معي</h2>
@@ -300,7 +301,7 @@
                     <textarea rows="6" placeholder="الرسالة / Message" required></textarea>
                     <button type="submit" class="btn-neon" style="align-self: flex-start;" data-i18n="btnSend">إرسال الرسالة</button>
                 </form>
-                <div style="margin-top: 40px; text-align: center; color: var(--neon-primary); font-size: 1.2rem; font-weight: bold;" id="ui-contact-info">
+                <div style="margin-top: 40px; text-align: center; color: var(--text-main); font-size: 1.3rem; letter-spacing: 1px;" id="ui-contact-info">
                     <!-- Contact info injected here -->
                 </div>
             </div>
@@ -313,7 +314,7 @@
             <h2 style="color: var(--neon-primary); margin-bottom: 20px;">دخول الأدمن</h2>
             <input type="text" id="login-user" class="admin-input" placeholder="Username">
             <input type="password" id="login-pass" class="admin-input" placeholder="Password">
-            <button class="btn-neon" style="margin-top: 15px;" onclick="attemptLogin()">تسجيل الدخول</button>
+            <button class="btn-neon" style="margin-top: 15px;" onclick="attemptLogin()">دخول</button>
             <p id="login-error" style="color: #ff3333; margin-top: 15px; display: none;">بيانات غير صحيحة</p>
         </div>
     </section>
@@ -328,7 +329,7 @@
 
             <!-- Global Settings -->
             <div class="admin-section">
-                <h3 style="color: var(--neon-primary); margin-bottom: 15px;">الإعدادات العامة والبيانات الشخصية</h3>
+                <h3 style="color: var(--neon-primary); margin-bottom: 15px;">الإعدادات العامة</h3>
                 <label>رابط صورة الخلفية (اتركه فارغاً للصورة الافتراضية)</label>
                 <input type="text" id="admin-bg" class="admin-input" placeholder="Image URL">
                 
@@ -348,15 +349,15 @@
                 </div>
 
                 <div class="grid-3" style="margin-top: 10px;">
-                    <div><label>وصف الهيرو (عربي)</label><textarea id="admin-herodesc-ar" class="admin-input"></textarea></div>
-                    <div><label>Hero Desc (English)</label><textarea id="admin-herodesc-en" class="admin-input"></textarea></div>
-                    <div><label>Hero Desc (Français)</label><textarea id="admin-herodesc-fr" class="admin-input"></textarea></div>
+                    <div><label>وصف الهيرو (عربي)</label><textarea id="admin-herodesc-ar" class="admin-input" rows="3"></textarea></div>
+                    <div><label>Hero Desc (English)</label><textarea id="admin-herodesc-en" class="admin-input" rows="3"></textarea></div>
+                    <div><label>Hero Desc (Français)</label><textarea id="admin-herodesc-fr" class="admin-input" rows="3"></textarea></div>
                 </div>
                 
                 <div class="grid-3" style="margin-top: 10px;">
-                    <div><label>من أنا (عربي)</label><textarea id="admin-about-ar" class="admin-input"></textarea></div>
-                    <div><label>About (English)</label><textarea id="admin-about-en" class="admin-input"></textarea></div>
-                    <div><label>À propos (Français)</label><textarea id="admin-about-fr" class="admin-input"></textarea></div>
+                    <div><label>من أنا (عربي)</label><textarea id="admin-about-ar" class="admin-input" rows="5"></textarea></div>
+                    <div><label>About (English)</label><textarea id="admin-about-en" class="admin-input" rows="5"></textarea></div>
+                    <div><label>À propos (Français)</label><textarea id="admin-about-fr" class="admin-input" rows="5"></textarea></div>
                 </div>
 
                 <button class="btn-neon" style="margin-top: 20px;" onclick="saveGlobalInfo()">حفظ التعديلات الأساسية</button>
@@ -377,19 +378,6 @@
             </div>
 
             <div class="admin-section">
-                <h3 style="color: var(--neon-primary); margin-bottom: 15px;">إضافة شركاء (Partners)</h3>
-                <input type="text" id="new-part-img" class="admin-input" placeholder="رابط الشعار (Logo URL)">
-                <input type="text" id="new-part-link" class="admin-input" placeholder="رابط الموقع (Website URL)">
-                <div class="grid-3">
-                    <input type="text" id="new-part-desc-ar" class="admin-input" placeholder="الوصف (عربي)">
-                    <input type="text" id="new-part-desc-en" class="admin-input" placeholder="Desc (English)">
-                    <input type="text" id="new-part-desc-fr" class="admin-input" placeholder="Desc (Français)">
-                </div>
-                <button class="btn-neon" onclick="addDynamicItem('partners')">إضافة الشريك</button>
-                <ul class="admin-list" id="admin-partners-list" style="margin-top: 15px;"></ul>
-            </div>
-
-            <div class="admin-section">
                 <h3 style="color: var(--neon-primary); margin-bottom: 15px;">إضافة شهادات (Certificates)</h3>
                 <input type="text" id="new-cert-img" class="admin-input" placeholder="رابط الصورة (Image URL)">
                 <div class="grid-3">
@@ -407,7 +395,7 @@
     <!-- ================= JavaScript ================= -->
     <script>
         /* =========================================
-           1. Data & State Management
+           1. Data & State Management (تم تغيير اسم قاعدة البيانات لتجاهل القديمة)
            ========================================= */
         const defaultBg = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDfYpaZ6QgBgvY8A9K34omey7-bQn5xDa0HP2IQahNo5ETv6Xun26Cbb5bSpzZ40dCanPVRvCfuYUuWZ2Kd4ILTnCqhW1HXk1TjJxB06M-a0ov2dmOdmck8WSU0qStm3IJ05kxwmtjfdUs6-R4SC_rfEIcnbb7EjNiizk38hkCX0OdAUPL52-6oY2bJEo/s1830/1000009721.png";
         
@@ -415,20 +403,23 @@
             bgImg: defaultBg,
             contactInfo: "+123456789 | email@domain.com",
             name: { ar: "محمد أحمد", en: "Mohamed Ahmed", fr: "Mohamed Ahmed" },
-            title: { ar: "مطور ويب محترف", en: "Professional Web Developer", fr: "Développeur Web Pro" },
+            title: { ar: "مطور ومصمم محترف", en: "Pro Developer & Designer", fr: "Développeur & Designer Pro" },
             heroDesc: { ar: "أصنع تجارب رقمية استثنائية وعصرية", en: "Building exceptional & modern digital experiences", fr: "Créer des expériences numériques exceptionnelles et modernes" },
-            about: { ar: "أنا مطور ويب شغوف ببناء واجهات مستخدم حديثة ومواقع تفاعلية تجذب المستخدمين...", en: "I am a web developer passionate about building modern UI...", fr: "Je suis un développeur web passionné par la création d'UI modernes..." },
+            about: { ar: "أنا متخصص في بناء الواجهات، تحرير الفيديوهات، تصميم الجرافيك وإدارة الحملات الإعلانية لتحقيق أفضل النتائج...", en: "I specialize in building interfaces, video editing, graphic design, and managing ad campaigns...", fr: "Je me spécialise dans la création d'interfaces, le montage vidéo, le design graphique et la gestion de campagnes..." },
             services: [
                 { ar: "تطوير الويب", en: "Web Development", fr: "Développement Web", icon: "💻" },
-                { ar: "تصميم واجهات", en: "UI/UX Design", fr: "Design UI/UX", icon: "🎨" },
-                { ar: "تطبيقات هواتف", en: "Mobile Apps", fr: "Apps Mobiles", icon: "📱" }
+                { ar: "تصميم الجرافيك", en: "Graphic Design", fr: "Design Graphique", icon: "🎨" },
+                { ar: "تحرير الفيديوهات", en: "Video Editing", fr: "Montage Vidéo", icon: "🎬" }
             ],
+            // إضافة المهارات الجديدة
             skills: [
                 { name: "HTML / CSS / JS", percent: 95 },
-                { name: "React / Vue", percent: 85 },
+                { name: "Graphic Design (Designer)", percent: 90 },
+                { name: "Video Editing", percent: 88 },
+                { name: "Meta Ads", percent: 85 },
                 { name: "UI/UX Design", percent: 80 }
             ],
-            projects: [], partners: [], certificates: []
+            projects: [], certificates: []
         };
 
         const staticI18n = {
@@ -436,7 +427,6 @@
             navAbout: { ar: "من أنا", en: "About", fr: "À propos" },
             navServices: { ar: "الخدمات", en: "Services", fr: "Services" },
             navProjects: { ar: "الأعمال", en: "Projects", fr: "Projets" },
-            navPartners: { ar: "الشركاء", en: "Partners", fr: "Partenaires" },
             navContact: { ar: "تواصل", en: "Contact", fr: "Contact" },
             titleSkills: { ar: "المهارات", en: "Skills", fr: "Compétences" },
             titleCertificates: { ar: "الشهادات", en: "Certificates", fr: "Certificats" },
@@ -446,7 +436,8 @@
 
         const langFlags = { ar: "🇸🇦 العربية", en: "🇬🇧 English", fr: "🇫🇷 Français" };
 
-        let appData = JSON.parse(localStorage.getItem('portfolioData')) || defaultData;
+        // تغيير المفتاح إلى portfolioDataV2 لفرض التحديث لديك
+        let appData = JSON.parse(localStorage.getItem('portfolioDataV2')) || defaultData;
         let currentLang = 'ar';
         let isAdminLoggedIn = false;
 
@@ -454,50 +445,46 @@
            2. Render & UI Updates
            ========================================= */
         function renderUI() {
-            // Direction & Language
             document.documentElement.lang = currentLang;
             document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             
-            // Update Lang Switcher UI
             document.getElementById('current-lang-display').innerHTML = langFlags[currentLang];
 
-            // Background Image
             const bgElement = document.getElementById('hero-background');
             if(bgElement) bgElement.style.backgroundImage = `url('${appData.bgImg || defaultBg}')`;
 
-            // Static Texts
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if(staticI18n[key]) el.textContent = staticI18n[key][currentLang];
             });
 
-            // Dynamic Texts
             document.getElementById('ui-name').textContent = appData.name[currentLang];
             document.getElementById('ui-title').textContent = appData.title[currentLang];
             document.getElementById('ui-hero-desc').textContent = appData.heroDesc[currentLang];
             document.getElementById('ui-about-desc').textContent = appData.about[currentLang];
             document.getElementById('ui-contact-info').textContent = appData.contactInfo;
 
-            // Render Grids
             renderServices();
             renderSkills();
             renderGridItems('projects', 'ui-projects-container');
-            renderGridItems('partners', 'ui-partners-container');
             renderGridItems('certificates', 'ui-certs-container');
 
-            // Re-initialize animations
             setTimeout(observeElements, 100);
         }
 
         function changeLanguage(lang) {
             currentLang = lang;
             renderUI();
-            // إغلاق القائمة في الجوال بعد اختيار اللغة
-            document.getElementById('nav-links').classList.remove('active');
+            closeMenu();
         }
 
         function toggleMenu() {
             document.getElementById('nav-links').classList.toggle('active');
+            document.getElementById('hamburger').classList.toggle('active');
+        }
+        function closeMenu() {
+            document.getElementById('nav-links').classList.remove('active');
+            document.getElementById('hamburger').classList.remove('active');
         }
 
         /* =========================================
@@ -533,8 +520,8 @@
             container.innerHTML = items.map((item, index) => `
                 <div class="glass-card item-card anim-element delay-${(index % 3) + 1}">
                     ${item.img ? `<img src="${item.img}" alt="Image">` : ''}
-                    <h3 style="color:var(--text-main);">${item.desc ? item.desc[currentLang] : ''}</h3>
-                    ${item.link ? `<a href="${item.link}" target="_blank" class="btn-neon" style="padding: 8px 20px; font-size:0.9rem;">زيارة الرابط</a>` : ''}
+                    <h3 style="color:var(--text-main); margin-bottom: 10px;">${item.desc ? item.desc[currentLang] : ''}</h3>
+                    ${item.link ? `<a href="${item.link}" target="_blank" class="btn-neon" style="padding: 8px 20px; font-size:0.9rem; margin-top: auto;">زيارة الرابط</a>` : ''}
                 </div>
             `).join('');
         }
@@ -547,8 +534,6 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('show');
-                        
-                        // تشغيل الـ Progress bars
                         if(entry.target.id === 'ui-skills-container') {
                             entry.target.querySelectorAll('.progress').forEach(p => {
                                 p.style.width = p.getAttribute('data-width');
@@ -559,7 +544,7 @@
             }, { threshold: 0.15 });
 
             document.querySelectorAll('.anim-element').forEach(el => {
-                el.classList.remove('show'); // Reset for re-trigger
+                el.classList.remove('show');
                 observer.observe(el);
             });
         }
@@ -600,7 +585,6 @@
                 document.getElementById('login-error').style.display = 'block';
             }
         }
-
         function logout() { isAdminLoggedIn = false; window.location.hash = ''; }
 
         /* =========================================
@@ -631,7 +615,7 @@
         }
 
         function addDynamicItem(type) {
-            let prefix = type === 'projects' ? 'proj' : type === 'partners' ? 'part' : 'cert';
+            let prefix = type === 'projects' ? 'proj' : 'cert';
             let img = document.getElementById(`new-${prefix}-img`).value;
             let link = document.getElementById(`new-${prefix}-link`) ? document.getElementById(`new-${prefix}-link`).value : '';
             let desc = {
@@ -642,7 +626,6 @@
             appData[type].push({ img, link, desc });
             saveData();
             
-            // Clear inputs
             document.getElementById(`new-${prefix}-img`).value = '';
             if(document.getElementById(`new-${prefix}-link`)) document.getElementById(`new-${prefix}-link`).value = '';
             ['ar','en','fr'].forEach(l => document.getElementById(`new-${prefix}-desc-${l}`).value = '');
@@ -656,7 +639,7 @@
         }
 
         function renderAdminLists() {
-            const types = [{ id: 'admin-projects-list', key: 'projects' }, { id: 'admin-partners-list', key: 'partners' }, { id: 'admin-certs-list', key: 'certificates' }];
+            const types = [{ id: 'admin-projects-list', key: 'projects' }, { id: 'admin-certs-list', key: 'certificates' }];
             types.forEach(t => {
                 document.getElementById(t.id).innerHTML = appData[t.key].map((item, index) => `
                     <li>
@@ -666,9 +649,10 @@
             });
         }
 
-        function saveData() { localStorage.setItem('portfolioData', JSON.stringify(appData)); }
+        // تم تغيير المفتاح هنا أيضاً للحفظ في الداتا بيز الجديدة
+        function saveData() { localStorage.setItem('portfolioDataV2', JSON.stringify(appData)); }
 
-        // Start
+        // Start App
         window.onload = checkRoute;
 
     </script>
