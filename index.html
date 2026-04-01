@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Premium</title>
+    <style>
+        /* =========================================
+           CSS Variables (المتغيرات والألوان)
+           ========================================= */
+        :root {
+            --bg-color: #050510;
+            --neon-primary: #00f3ff;
+            --neon-secondary: #b026ff;
+            --text-main: #ffffff;
+            --text-muted: #a0a0b5;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        /* =========================================
+           Global Styles (التنسيقات العامة)
+           ========================================= */
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            overflow-x: hidden;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        /* تأثير التدرج المتحرك في الخلفية */
+        .bg-gradient {
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0,243,255,0.05) 0%, rgba(176,38,255,0.05) 50%, rgba(5,5,16,0) 100%);
+            animation: rotateGradient 20s linear infinite;
+            z-index: -1; pointer-events: none;
+        }
+        @keyframes rotateGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Classes التصميم الزجاجي والمضيء */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: var(--transition);
+        }
+        .glass-card:hover {
+            border-color: var(--neon-primary);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        .glow-text {
+            text-shadow: 0 0 10px var(--neon-primary), 0 0 20px var(--neon-secondary);
+        }
+        .btn-neon {
+            background: transparent; color: var(--text-main);
+            border: 1px solid var(--neon-primary); padding: 10px 25px;
+            border-radius: 30px; cursor: pointer; transition: var(--transition);
+            font-size: 1rem; position: relative; overflow: hidden;
+        }
+        .btn-neon:hover {
+            background: var(--neon-primary); color: #000;
+            box-shadow: 0 0 15px var(--neon-primary);
+        }
+
+        /* =========================================
+           Layout & Sections (الهيكل والأقسام)
+           ========================================= */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 100px 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--neon-primary); }
+        
+        /* Navbar */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(5, 5, 16, 0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border); padding: 15px 0;
+        }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--neon-primary); }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: var(--text-main); text-decoration: none; transition: var(--transition); }
+        .nav-links a:hover { color: var(--neon-primary); text-shadow: 0 0 5px var(--neon-primary); }
+        .lang-switcher select {
+            background: transparent; color: white; border: 1px solid var(--neon-primary);
+            padding: 5px; border-radius: 5px; cursor: pointer; outline: none;
+        }
+        .lang-switcher select option { background: var(--bg-color); color: white; }
+
+        /* Hero Section */
+        .hero { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-top: 50px;}
+        .hero-text { flex: 1; min-width: 300px; }
+        .hero-text h1 { font-size: 3.5rem; margin-bottom: 15px; }
+        .hero-text h2 { font-size: 2rem; color: var(--neon-secondary); margin-bottom: 20px; }
+        .hero-text p { color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; font-size: 1.1rem; }
+        .hero-img {
+            flex: 1; display: flex; justify-content: center; min-width: 300px;
+            position: relative;
+        }
+        .hero-img img {
+            width: 300px; height: 300px; object-fit: cover; border-radius: 50%;
+            border: 4px solid rgba(0, 243, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4), inset 0 0 20px rgba(176, 38, 255, 0.5);
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        /* Grid Layouts */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
+
+        /* Skills */
+        .skill-item { margin-bottom: 20px; }
+        .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .progress-bar { width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
+        .progress { height: 100%; background: linear-gradient(90deg, var(--neon-primary), var(--neon-secondary)); width: 0; transition: width 1.5s ease-in-out; }
+
+        /* Items (Projects, Partners, Certs) */
+        .item-card { text-align: center; }
+        .item-card img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 15px; }
+        .item-card h3 { margin-bottom: 10px; color: var(--neon-primary); }
+        .item-card p { color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem; }
+
+        /* Contact Form */
+        .contact-form { display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; width: 100%; }
+        .contact-form input, .contact-form textarea {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: white; padding: 15px; border-radius: 10px; font-family: inherit; outline: none; transition: var(--transition);
+        }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--neon-primary); box-shadow: 0 0 10px rgba(0,243,255,0.2); }
+
+        /* Animations (Fade in on scroll) */
+        .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in.show { opacity: 1; transform: translateY(0); }
+
+        /* =========================================
+           Admin Panel Styles
+           ========================================= */
+        #admin-view, #login-view { display: none; padding-top: 100px; min-height: 100vh; }
+        .admin-panel { background: rgba(0,0,0,0.8); padding: 30px; border-radius: 15px; border: 1px solid var(--neon-secondary); }
+        .admin-section { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .admin-form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .admin-form-group input, .admin-form-group textarea { background: #111; border: 1px solid #333; color: white; padding: 10px; border-radius: 5px; }
+        .admin-list { list-style: none; margin-top: 15px; }
+        .admin-list li { display: flex; justify-content: space-between; background: #222; padding: 10px; margin-bottom: 5px; border-radius: 5px; }
+        .btn-danger { background: #ff3333; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Simplified for single file - in real app add hamburger */
+            .hero { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient"></div>
+
+    <!-- ================= Navbar ================= -->
+    <nav id="main-nav">
+        <div class="container nav-content">
+            <div class="logo glow-text" id="logo-text">Portfolio</div>
+            <ul class="nav-links">
+                <li><a href="#home" data-i18n="navHome">الرئيسية</a></li>
+                <li><a href="#about" data-i18n="navAbout">من أنا</a></li>
+                <li><a href="#services" data-i18n="navServices">الخدمات</a></li>
+                <li><a href="#projects" data-i18n="navProjects">الأعمال</a></li>
+                <li><a href="#partners" data-i18n="navPartners">الشركاء</a></li>
+                <li><a href="#contact" data-i18n="navContact">تواصل</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <select id="lang-select" onchange="changeLanguage(this.value)">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= Public Portfolio View ================= -->
+    <main id="portfolio-view">
+        
+        <!-- Hero Section -->
+        <section id="home" class="container">
+            <div class="hero">
+                <div class="hero-text fade-in">
+                    <h1 class="glow-text" id="ui-name">الاسم</h1>
+                    <h2 id="ui-title">التخصص</h2>
+                    <p id="ui-hero-desc">وصف مختصر يكتب هنا</p>
+                    <a href="#contact" class="btn-neon" data-i18n="btnContact">تواصل معي</a>
+                </div>
+                <div class="hero-img fade-in">
+                    <!-- الصورة المطلوبة -->
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDfYpaZ6QgBgvY8A9K34omey7-bQn5xDa0HP2IQahNo5ETv6Xun26Cbb5bSpzZ40dCanPVRvCfuYUuWZ2Kd4ILTnCqhW1HXk1TjJxB06M-a0ov2dmOdmck8WSU0qStm3IJ05kxwmtjfdUs6-R4SC_rfEIcnbb7EjNiizk38hkCX0OdAUPL52-6oY2bJEo/s1830/1000009721.png" alt="Profile Picture">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container">
+            <h2 class="section-title fade-in" data-i18n="navAbout">من أنا</h2>
+            <div class="glass-card fade-in">
+                <p style="line-height: 1.8; text-align: justify; font-size: 1.1rem;" id="ui-about-desc">
+                    نص من أنا...
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="container">
+            <h2 class="section-title fade-in" data-i18n="titleSkills">المهارات</h2>
+            <div class="glass-card grid-2 fade-in" id="ui-skills-container">
+                <!-- Skills will be injected here -->
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="container">
+            <h2 class="section-title fade-in" data-i18n="navServices">الخدمات</h2>
+            <div class="grid-3 fade-in" id="ui-services-container">
+                <!-- Services injected here -->
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="container">
+            <h2 class="section-title fade-in" data-i18n="navProjects">الأعمال</h2>
+            <div class="grid-3 fade-in" id="ui-projects-container">
+                <!-- Projects injected here -->
+            </div>
+        </section>
+
+        <!-- Certificates Section -->
+        <section id="certificates" class="container">
+            <h2 class="section-title fade-in" data-i18n="titleCertificates">الشهادات</h2>
+            <div class="grid-3 fade-in" id="ui-certs-container">
+                <!-- Certificates injected here -->
+            </div>
+        </section>
+
+        <!-- Partners Section -->
+        <section id="partners" class="container">
+            <h2 class="section-title fade-in" data-i18n="navPartners">الشركاء والعملاء</h2>
+            <div class="grid-3 fade-in" id="ui-partners-container">
+                <!-- Partners injected here -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container">
+            <h2 class="section-title fade-in" data-i18n="navContact">تواصل معي</h2>
+            <div class="glass-card fade-in">
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                    <input type="text" placeholder="الاسم / Name" required id="contact-name">
+                    <input type="email" placeholder="البريد الإلكتروني / Email" required id="contact-email">
+                    <textarea rows="5" placeholder="الرسالة / Message" required id="contact-msg"></textarea>
+                    <button type="submit" class="btn-neon" data-i18n="btnSend">إرسال</button>
+                </form>
+                <div style="margin-top: 30px; text-align: center; color: var(--text-muted);" id="ui-contact-info">
+                    <!-- Contact info injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================= Login View ================= -->
+    <section id="login-view" class="container">
+        <div class="glass-card" style="max-width: 400px; margin: 0 auto; text-align: center;">
+            <h2 style="color: var(--neon-primary); margin-bottom: 20px;">Admin Login</h2>
+            <div class="admin-form-group">
+                <input type="text" id="login-user" placeholder="Username">
+                <input type="password" id="login-pass" placeholder="Password">
+            </div>
+            <button class="btn-neon" onclick="attemptLogin()">Login</button>
+            <p id="login-error" style="color: red; margin-top: 10px; display: none;">بيانات غير صحيحة</p>
+        </div>
+    </section>
+
+    <!-- ================= Admin Dashboard View ================= -->
+    <section id="admin-view" class="container">
+        <div class="admin-panel glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 class="glow-text">لوحة التحكم (Admin Panel)</h2>
+                <button class="btn-danger" onclick="logout()">تسجيل الخروج</button>
+            </div>
+
+            <!-- Global Settings -->
+            <div class="admin-section">
+                <h3>الإعدادات العامة و البيانات الشخصية</h3>
+                <div class="grid-2" style="margin-top: 15px;">
+                    <div class="admin-form-group">
+                        <label>رابط صورة الخلفية (اتركه فارغاً للخلفية الافتراضية)</label>
+                        <input type="text" id="admin-bg" placeholder="URL">
+                    </div>
+                    <div class="admin-form-group">
+                        <label>معلومات الاتصال (الهاتف / الايميل)</label>
+                        <input type="text" id="admin-contact-info">
+                    </div>
+                </div>
+                
+                <h4>الاسم (بـ 3 لغات)</h4>
+                <div class="grid-3">
+                    <input type="text" id="admin-name-ar" placeholder="الاسم (عربي)">
+                    <input type="text" id="admin-name-en" placeholder="Name (English)">
+                    <input type="text" id="admin-name-fr" placeholder="Nom (Français)">
+                </div>
+
+                <h4 style="margin-top: 15px;">التخصص (بـ 3 لغات)</h4>
+                <div class="grid-3">
+                    <input type="text" id="admin-title-ar" placeholder="التخصص (عربي)">
+                    <input type="text" id="admin-title-en" placeholder="Title (English)">
+                    <input type="text" id="admin-title-fr" placeholder="Titre (Français)">
+                </div>
+
+                <h4 style="margin-top: 15px;">وصف الهيرو (بـ 3 لغات)</h4>
+                <div class="grid-3">
+                    <textarea id="admin-herodesc-ar" placeholder="وصف (عربي)"></textarea>
+                    <textarea id="admin-herodesc-en" placeholder="Desc (English)"></textarea>
+                    <textarea id="admin-herodesc-fr" placeholder="Desc (Français)"></textarea>
+                </div>
+                
+                <h4 style="margin-top: 15px;">من أنا (بـ 3 لغات)</h4>
+                <div class="grid-3">
+                    <textarea id="admin-about-ar" placeholder="من أنا (عربي)"></textarea>
+                    <textarea id="admin-about-en" placeholder="About (English)"></textarea>
+                    <textarea id="admin-about-fr" placeholder="À propos (Français)"></textarea>
+                </div>
+
+                <button class="btn-neon" style="margin-top: 15px;" onclick="saveGlobalInfo()">حفظ التعديلات الأساسية</button>
+            </div>
+
+            <!-- Dynamic Arrays (Projects, Partners, Certs) -->
+            <!-- Projects -->
+            <div class="admin-section">
+                <h3>إدارة الأعمال (Projects)</h3>
+                <div class="admin-form-group" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    <input type="text" id="new-proj-img" placeholder="رابط صورة العمل (Image URL)">
+                    <input type="text" id="new-proj-link" placeholder="رابط المشروع (Project URL)">
+                    <div class="grid-3">
+                        <input type="text" id="new-proj-desc-ar" placeholder="الوصف (عربي)">
+                        <input type="text" id="new-proj-desc-en" placeholder="Desc (English)">
+                        <input type="text" id="new-proj-desc-fr" placeholder="Desc (Français)">
+                    </div>
+                    <button class="btn-neon" onclick="addDynamicItem('projects')">إضافة عمل</button>
+                </div>
+                <ul class="admin-list" id="admin-projects-list"></ul>
+            </div>
+
+            <!-- Partners -->
+            <div class="admin-section">
+                <h3>إدارة الشركاء (Partners)</h3>
+                <div class="admin-form-group" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    <input type="text" id="new-part-img" placeholder="رابط شعار الشريك (Logo URL)">
+                    <input type="text" id="new-part-link" placeholder="رابط موقع الشريك (Website URL)">
+                    <div class="grid-3">
+                        <input type="text" id="new-part-desc-ar" placeholder="الوصف (عربي)">
+                        <input type="text" id="new-part-desc-en" placeholder="Desc (English)">
+                        <input type="text" id="new-part-desc-fr" placeholder="Desc (Français)">
+                    </div>
+                    <button class="btn-neon" onclick="addDynamicItem('partners')">إضافة شريك</button>
+                </div>
+                <ul class="admin-list" id="admin-partners-list"></ul>
+            </div>
+
+            <!-- Certificates -->
+            <div class="admin-section">
+                <h3>إدارة الشهادات (Certificates)</h3>
+                <div class="admin-form-group" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    <input type="text" id="new-cert-img" placeholder="رابط صورة الشهادة (Image URL)">
+                    <div class="grid-3">
+                        <input type="text" id="new-cert-desc-ar" placeholder="الوصف (عربي)">
+                        <input type="text" id="new-cert-desc-en" placeholder="Desc (English)">
+                        <input type="text" id="new-cert-desc-fr" placeholder="Desc (Français)">
+                    </div>
+                    <button class="btn-neon" onclick="addDynamicItem('certificates')">إضافة شهادة</button>
+                </div>
+                <ul class="admin-list" id="admin-certs-list"></ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= JavaScript ================= -->
+    <script>
+        /* =========================================
+           1. Data & State Management
+           ========================================= */
+        const defaultData = {
+            bgImg: "",
+            contactInfo: "+123456789 | email@domain.com",
+            name: { ar: "محمد أحمد", en: "Mohamed Ahmed", fr: "Mohamed Ahmed" },
+            title: { ar: "مطور ويب محترف", en: "Professional Web Developer", fr: "Développeur Web Pro" },
+            heroDesc: { ar: "أصنع تجارب رقمية استثنائية", en: "Building exceptional digital experiences", fr: "Créer des expériences numériques exceptionnelles" },
+            about: { ar: "أنا مطور ويب شغوف ببناء واجهات مستخدم حديثة ومواقع تفاعلية...", en: "I am a web developer passionate about building modern UI...", fr: "Je suis un développeur web passionné par la création d'UI modernes..." },
+            services: [
+                { ar: "تطوير الويب", en: "Web Development", fr: "Développement Web", icon: "💻" },
+                { ar: "تصميم واجهات", en: "UI/UX Design", fr: "Design UI/UX", icon: "🎨" },
+                { ar: "تطبيقات هواتف", en: "Mobile Apps", fr: "Apps Mobiles", icon: "📱" }
+            ],
+            skills: [
+                { name: "HTML / CSS", percent: 95 },
+                { name: "JavaScript", percent: 85 },
+                { name: "UI/UX", percent: 80 }
+            ],
+            projects: [],
+            partners: [],
+            certificates: []
+        };
+
+        // Static UI Translations
+        const staticI18n = {
+            navHome: { ar: "الرئيسية", en: "Home", fr: "Accueil" },
+            navAbout: { ar: "من أنا", en: "About", fr: "À propos" },
+            navServices: { ar: "الخدمات", en: "Services", fr: "Services" },
+            navProjects: { ar: "الأعمال", en: "Projects", fr: "Projets" },
+            navPartners: { ar: "الشركاء", en: "Partners", fr: "Partenaires" },
+            navContact: { ar: "تواصل", en: "Contact", fr: "Contact" },
+            titleSkills: { ar: "المهارات", en: "Skills", fr: "Compétences" },
+            titleCertificates: { ar: "الشهادات", en: "Certificates", fr: "Certificats" },
+            btnContact: { ar: "تواصل معي", en: "Contact Me", fr: "Contactez-moi" },
+            btnSend: { ar: "إرسال", en: "Send", fr: "Envoyer" }
+        };
+
+        let appData = JSON.parse(localStorage.getItem('portfolioData')) || defaultData;
+        let currentLang = 'ar';
+        let isAdminLoggedIn = false;
+
+        /* =========================================
+           2. Render & UI Updates
+           ========================================= */
+        function renderUI() {
+            // Apply language direction
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+            // Apply Background
+            if(appData.bgImg) {
+                document.body.style.backgroundImage = `url('${appData.bgImg}')`;
+            } else {
+                document.body.style.backgroundImage = 'none';
+            }
+
+            // Update Static Texts
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(staticI18n[key]) el.textContent = staticI18n[key][currentLang];
+            });
+
+            // Update Global Info
+            document.getElementById('ui-name').textContent = appData.name[currentLang];
+            document.getElementById('ui-title').textContent = appData.title[currentLang];
+            document.getElementById('ui-hero-desc').textContent = appData.heroDesc[currentLang];
+            document.getElementById('ui-about-desc').textContent = appData.about[currentLang];
+            document.getElementById('ui-contact-info').textContent = appData.contactInfo;
+
+            // Render Arrays
+            renderServices();
+            renderSkills();
+            renderGridItems('projects', 'ui-projects-container');
+            renderGridItems('partners', 'ui-partners-container');
+            renderGridItems('certificates', 'ui-certs-container');
+
+            // Trigger scroll animations
+            observeElements();
+        }
+
+        function renderServices() {
+            const container = document.getElementById('ui-services-container');
+            container.innerHTML = appData.services.map(s => `
+                <div class="glass-card item-card">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">${s.icon}</div>
+                    <h3>${s[currentLang]}</h3>
+                </div>
+            `).join('');
+        }
+
+        function renderSkills() {
+            const container = document.getElementById('ui-skills-container');
+            container.innerHTML = appData.skills.map(s => `
+                <div class="skill-item">
+                    <div class="skill-info"><span>${s.name}</span><span>${s.percent}%</span></div>
+                    <div class="progress-bar"><div class="progress" data-width="${s.percent}%"></div></div>
+                </div>
+            `).join('');
+            
+            // Animate progress bars
+            setTimeout(() => {
+                document.querySelectorAll('.progress').forEach(p => {
+                    p.style.width = p.getAttribute('data-width');
+                });
+            }, 500);
+        }
+
+        function renderGridItems(arrayName, containerId) {
+            const container = document.getElementById(containerId);
+            const items = appData[arrayName];
+            if(!items || items.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; grid-column: 1/-1;">لا توجد عناصر حالياً / No items yet</p>`;
+                return;
+            }
+            container.innerHTML = items.map(item => `
+                <div class="glass-card item-card">
+                    ${item.img ? `<img src="${item.img}" alt="Image">` : ''}
+                    <p>${item.desc ? item.desc[currentLang] : ''}</p>
+                    ${item.link ? `<a href="${item.link}" target="_blank" class="btn-neon" style="padding: 5px 15px; font-size:0.8rem;">رابط / Link</a>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            renderUI();
+        }
+
+        /* =========================================
+           3. Scroll Animations (Intersection Observer)
+           ========================================= */
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        }
+
+        /* =========================================
+           4. Routing & Admin System
+           ========================================= */
+        function checkRoute() {
+            const hash = window.location.hash;
+            document.getElementById('portfolio-view').style.display = 'none';
+            document.getElementById('login-view').style.display = 'none';
+            document.getElementById('admin-view').style.display = 'none';
+            document.getElementById('main-nav').style.display = 'none';
+
+            if (hash === '#admin') {
+                if (isAdminLoggedIn) {
+                    document.getElementById('admin-view').style.display = 'block';
+                    populateAdminForm();
+                } else {
+                    document.getElementById('login-view').style.display = 'block';
+                }
+            } else {
+                document.getElementById('main-nav').style.display = 'block';
+                document.getElementById('portfolio-view').style.display = 'block';
+                renderUI();
+            }
+        }
+
+        window.addEventListener('hashchange', checkRoute);
+
+        function attemptLogin() {
+            const user = document.getElementById('login-user').value;
+            const pass = document.getElementById('login-pass').value;
+            if (user === 'admin' && pass === 'abobob12345') {
+                isAdminLoggedIn = true;
+                checkRoute();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            isAdminLoggedIn = false;
+            window.location.hash = '';
+        }
+
+        /* =========================================
+           5. Admin CRUD Operations
+           ========================================= */
+        function populateAdminForm() {
+            // Populate Global Text Inputs
+            document.getElementById('admin-bg').value = appData.bgImg || "";
+            document.getElementById('admin-contact-info').value = appData.contactInfo || "";
+
+            ['ar', 'en', 'fr'].forEach(lang => {
+                document.getElementById(`admin-name-${lang}`).value = appData.name[lang] || "";
+                document.getElementById(`admin-title-${lang}`).value = appData.title[lang] || "";
+                document.getElementById(`admin-herodesc-${lang}`).value = appData.heroDesc[lang] || "";
+                document.getElementById(`admin-about-${lang}`).value = appData.about[lang] || "";
+            });
+
+            renderAdminLists();
+        }
+
+        function saveGlobalInfo() {
+            appData.bgImg = document.getElementById('admin-bg').value;
+            appData.contactInfo = document.getElementById('admin-contact-info').value;
+
+            ['ar', 'en', 'fr'].forEach(lang => {
+                appData.name[lang] = document.getElementById(`admin-name-${lang}`).value;
+                appData.title[lang] = document.getElementById(`admin-title-${lang}`).value;
+                appData.heroDesc[lang] = document.getElementById(`admin-herodesc-${lang}`).value;
+                appData.about[lang] = document.getElementById(`admin-about-${lang}`).value;
+            });
+
+            saveData();
+            alert('تم حفظ البيانات بنجاح!');
+        }
+
+        function addDynamicItem(type) {
+            let prefix = type === 'projects' ? 'proj' : type === 'partners' ? 'part' : 'cert';
+            let img = document.getElementById(`new-${prefix}-img`).value;
+            let link = document.getElementById(`new-${prefix}-link`) ? document.getElementById(`new-${prefix}-link`).value : '';
+            let desc = {
+                ar: document.getElementById(`new-${prefix}-desc-ar`).value,
+                en: document.getElementById(`new-${prefix}-desc-en`).value,
+                fr: document.getElementById(`new-${prefix}-desc-fr`).value
+            };
+
+            appData[type].push({ img, link, desc });
+            saveData();
+            
+            // Clear inputs
+            document.getElementById(`new-${prefix}-img`).value = '';
+            if(document.getElementById(`new-${prefix}-link`)) document.getElementById(`new-${prefix}-link`).value = '';
+            ['ar','en','fr'].forEach(l => document.getElementById(`new-${prefix}-desc-${l}`).value = '');
+
+            renderAdminLists();
+        }
+
+        function deleteDynamicItem(type, index) {
+            if(confirm('هل أنت متأكد من الحذف؟')) {
+                appData[type].splice(index, 1);
+                saveData();
+                renderAdminLists();
+            }
+        }
+
+        function renderAdminLists() {
+            const types = [
+                { id: 'admin-projects-list', key: 'projects' },
+                { id: 'admin-partners-list', key: 'partners' },
+                { id: 'admin-certs-list', key: 'certificates' }
+            ];
+
+            types.forEach(t => {
+                const ul = document.getElementById(t.id);
+                ul.innerHTML = appData[t.key].map((item, index) => `
+                    <li>
+                        <span style="color:white; font-size:0.9rem;">${item.desc.ar.substring(0,30)}...</span>
+                        <button class="btn-danger" onclick="deleteDynamicItem('${t.key}', ${index})">حذف</button>
+                    </li>
+                `).join('');
+            });
+        }
+
+        function saveData() {
+            localStorage.setItem('portfolioData', JSON.stringify(appData));
+        }
+
+        // Initialize App
+        window.onload = () => {
+            document.getElementById('lang-select').value = currentLang;
+            checkRoute();
+        };
+
+    </script>
+</body>
+</html>
